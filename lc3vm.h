@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/03 21:01:51 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 15:05:45 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <stdint.h>
 
 # define MEMORY_MAX (1 << 16)
+# define PC_START 0x3000
 
 enum e_registry
 {
@@ -64,5 +65,7 @@ typedef struct s_vm
 	uint16_t	*memory;
 	uint16_t	regs[11];
 }	t_vm;
+
+typedef void (*t_operation)(uint16_t, t_vm *);
 
 #endif
