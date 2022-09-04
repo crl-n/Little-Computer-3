@@ -2,7 +2,7 @@ NAME := lc3vm
 CFLAGS := -Wall -Wextra -Werror -g -I./includes
 
 SRCDIR = src/
-SRCS := $(addprefix $(SRCDIR), main.c add.c trap.c)
+SRCS := $(addprefix $(SRCDIR), main.c add.c trap.c sign_extend.c update_cond.c)
 
 OBJDIR := obj/
 OBJS := $(SRCS:$(SRCDIR)%.c=obj/%.o)

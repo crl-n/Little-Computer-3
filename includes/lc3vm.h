@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 19:10:54 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 19:49:29 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,9 @@ typedef struct s_vm
 
 typedef void (*t_operation)(uint16_t, t_vm *);
 
-void	add(uint16_t instr, t_vm *vm);
-void	trap(uint16_t instr, t_vm *vm);
+void		add(uint16_t instr, t_vm *vm);
+void		trap(uint16_t instr, t_vm *vm);
+uint16_t	sign_extend(uint16_t val, int bit_count);
+void		update_cond(t_vm *vm, uint16_t r);
 
 #endif

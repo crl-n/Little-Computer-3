@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:27:47 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 16:28:15 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 19:43:18 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,14 @@ void	add(uint16_t instr, t_vm *vm)
 	uint16_t	dr;
 	uint16_t	sr1;
 	uint16_t	sr2;
+	uint16_t	imm_flag;
 
 	dr = instr >> 9 & 0x7;
 	sr1 = instr >> 6 & 0x7;
-	if (instr >> 5 & 0x1)
+	imm_flag = instr >> 5 & 0x1;
+	if (imm_flag)
 	{
-		vm->regs[dr] = vm->regs[sr1] + (instr & 0x1f);
+		vm->regs[dr] = vm->regs[sr1] + sign_extend(instr & 0x1f, 5);
 		return ;
 	}
 	sr2 = instr & 0x7;
