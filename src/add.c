@@ -6,13 +6,15 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:27:47 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 19:43:18 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 20:13:11 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lc3vm.h"
 
-/* Encodings
+/* Addition instruction with two separate modes.
+ *
+ * Encodings
  *
  * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
  * |    OPCODE     |    DR     |    SR1    | 0 |   -   |    SR2    |
