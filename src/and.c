@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add.c                                              :+:      :+:    :+:   */
+/*   and.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/04 16:27:47 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 20:24:31 by carlnysten       ###   ########.fr       */
+/*   Created: 2022/09/04 20:20:17 by carlnysten        #+#    #+#             */
+/*   Updated: 2022/09/04 20:24:35 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lc3vm.h"
 
-/* Addition instruction with two separate modes.
+/* Bit-wise AND operation.
  *
  * Encodings
  *
@@ -24,7 +24,7 @@
  * |    OPCODE     |    DR     |    SR1    | 1 |       imm5        |
  * 											 ^ immediate mode
  */
-void	add(uint16_t instr, t_vm *vm)
+void	and(uint16_t instr, t_vm *vm)
 {
 	uint16_t	dr;
 	uint16_t	sr1;
@@ -36,10 +36,10 @@ void	add(uint16_t instr, t_vm *vm)
 	imm_flag = instr >> 5 & 0x1;
 	if (imm_flag)
 	{
-		vm->regs[dr] = vm->regs[sr1] + sign_extend(instr & 0x1f, 5);
+		vm->regs[dr] = vm->regs[sr1] & sign_extend(instr & 0x1f, 5);
 		return ;
 	}
 	sr2 = instr & 0x7;
-	vm->regs[dr] = vm->regs[sr1] + vm->regs[sr2];
+	vm->regs[dr] = vm->regs[sr1] & vm->regs[sr2];
 	update_cond(vm, dr);
 }
