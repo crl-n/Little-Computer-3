@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:30:45 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 15:47:46 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 16:30:01 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-
-/* Encodings
- *
- * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
- * |    OPCODE     |    DR     |    SR1    | 0 |   -   |    SR2    |
- * 											 ^ register mode
- *
- * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
- * |    OPCODE     |    DR     |    SR1    | 1 |       imm5        |
- * 											 ^ immediate mode
- */
-void	add(uint16_t instr, t_vm *vm)
-{
-	uint16_t	dr;
-	uint16_t	sr1;
-	uint16_t	sr2;
-
-	dr = instr >> 9 & 0x7;
-	sr1 = instr >> 6 & 0x7;
-	if (instr >> 5 & 0x1)
-	{
-		vm->regs[dr] = vm->regs[sr1] + (instr & 0x1f);
-		return ;
-	}
-	sr2 = instr & 0x7;
-	vm->regs[dr] = vm->regs[sr1] + vm->regs[sr2];
-}
-
-/* Encoding
- *
- * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
- * |    OPCODE     |       -       |           trapvect8           |
- *
- */
-void	trap(uint16_t instr, t_vm *vm)
-{
-	uint16_t	trapcode;
-
-	trapcode = instr & 0xff;
-	if (trapcode == 0x25)
-		vm->running = 0;
-}
 
 int	init_vm(t_vm *vm)
 {

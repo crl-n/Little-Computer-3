@@ -1,16 +1,28 @@
 NAME := lc3vm
-CFLAGS := -Wall -Wextra -Werror
-SRCS := main.c
+CFLAGS := -Wall -Wextra -Werror -g -I./includes
 
-all: $(NAME)
+SRCDIR = src/
+SRCS := $(addprefix $(SRCDIR), main.c add.c trap.c)
+
+OBJDIR := obj/
+OBJS := $(SRCS:$(SRCDIR)%.c=obj/%.o)
+$(info $(OBJS))
+
+all: $(OBJDIR) $(OBJS) $(NAME) 
+
+$(OBJDIR):
+	mkdir $(OBJDIR)
 
 $(NAME):
-	$(CC) $(CFLAGS) $(SRCS) -o $@
+	$(CC) $(CFLAGS) $(OBJS) -o $@
+
+$(OBJS): $(OBJDIR)%.o: $(SRCDIR)%.c
+	$(CC) -c $(CFLAGS) -o $@ $<
 
 clean:
-	/bin/rm *.o
+	-/bin/rm -rf $(OBJDIR)
 
 fclean: clean
-	/bin/rm $(NAME)
+	-/bin/rm $(NAME)
 
 re: fclean all

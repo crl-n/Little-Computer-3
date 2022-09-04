@@ -19,8 +19,9 @@ reg_names = [
 ]
 def vm_summary(valobj, internal_dict, options):
     summary_string = "{\n"
-    memory, regs = valobj.get_value_child_list()
+    memory, regs, running, *other = valobj.get_value_child_list()
     summary_string += "  " + str(memory) + "\n"
+    summary_string += "  " + str(running) + "\n"
     summary_string += "  (" + regs.GetTypeName() + ") regs = {\n"
     for i, reg in enumerate(regs):
         summary_string += "    {}: {},\n".format(reg_names[i], reg.GetValue())

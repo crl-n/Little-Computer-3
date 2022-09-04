@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 15:38:21 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 19:10:54 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ enum e_cond
 
 enum e_trapcode
 {
+	TRAP_GETC = 0x20,
+	TRAP_OUT = 0x21,
+	TRAP_PUTS = 0x22,
+	TRAP_IN = 0x23,
+	TRAP_PUTSP = 0x24,
 	TRAP_HALT = 0x25,
 };
 
@@ -73,5 +78,8 @@ typedef struct s_vm
 }	t_vm;
 
 typedef void (*t_operation)(uint16_t, t_vm *);
+
+void	add(uint16_t instr, t_vm *vm);
+void	trap(uint16_t instr, t_vm *vm);
 
 #endif
