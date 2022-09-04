@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:20:17 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 20:24:35 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 20:55:47 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * |    OPCODE     |    DR     |    SR1    | 1 |       imm5        |
  * 											 ^ immediate mode
  */
-void	and(uint16_t instr, t_vm *vm)
+void	and_comparison(uint16_t instr, t_vm *vm)
 {
 	uint16_t	dr;
 	uint16_t	sr1;
