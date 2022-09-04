@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 15:05:45 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 15:38:21 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,16 @@ enum e_cond
 	COND_NEG = 1 << 2,
 };
 
+enum e_trapcode
+{
+	TRAP_HALT = 0x25,
+};
+
 typedef struct s_vm
 {
 	uint16_t	*memory;
 	uint16_t	regs[11];
+	uint8_t		running;
 }	t_vm;
 
 typedef void (*t_operation)(uint16_t, t_vm *);

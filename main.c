@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:30:45 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 15:22:04 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 15:47:46 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,24 @@ void	add(uint16_t instr, t_vm *vm)
 	vm->regs[dr] = vm->regs[sr1] + vm->regs[sr2];
 }
 
+/* Encoding
+ *
+ * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+ * |    OPCODE     |       -       |           trapvect8           |
+ *
+ */
+void	trap(uint16_t instr, t_vm *vm)
+{
+	uint16_t	trapcode;
+
+	trapcode = instr & 0xff;
+	if (trapcode == 0x25)
+		vm->running = 0;
+}
+
 int	init_vm(t_vm *vm)
 {
+	vm->running = 1;
 	vm->memory = malloc(MEMORY_MAX * sizeof (uint16_t));
 	if (!vm->memory)
 		return (-1);
@@ -56,11 +72,26 @@ int	init_vm(t_vm *vm)
 void	load_program(t_vm *vm)
 {
 	vm->memory[PC_START] = 0b0001001010100001;
+	vm->memory[PC_START + 1] = 0b1111000000100101;
 }
 
 static const t_operation	g_jumptable[16] = {
 	0,
 	add,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	trap,
 };
 
 int	main(void)
@@ -72,7 +103,7 @@ int	main(void)
 	if (init_vm(&vm) == -1)
 		return (-1);
 	load_program(&vm);
-	while (1)
+	while (vm.running)
 	{
 		instr = vm.memory[vm.regs[R_PC]];
 		op = instr >> 12;
