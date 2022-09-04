@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:29:05 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 21:37:05 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/04 21:38:55 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	jump(uint16_t instr, t_vm *vm)
 	uint16_t	br;
 	uint16_t	offset;
 
+	vm->regs[R_R7] = vm->regs[R_PC];
 	if (instr >> 11 & 1)
 	{
 		offset = instr & 0x7ff;
