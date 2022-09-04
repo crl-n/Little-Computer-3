@@ -1,35 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   branch.c                                           :+:      :+:    :+:   */
+/*   jump.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/04 20:26:28 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 21:09:22 by carlnysten       ###   ########.fr       */
+/*   Created: 2022/09/04 21:09:48 by carlnysten        #+#    #+#             */
+/*   Updated: 2022/09/04 21:28:21 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lc3vm.h"
 
-/* Conditional branch instruction.
+/* Conditional jump instruction.
  *
- * Encoding
+ * Encodings
  *
+ * Jump:
  * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
- * |    OPCODE     | n | z | p |             PCoffset9             |
+ * |    OPCODE     |    --     |   BaseR   |          --           |
+ *
+ * Return:
+ * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+ * |    OPCODE     |    --     |    111    |          --           |
  *
  */
-void	branch(uint16_t instr, t_vm *vm)
+void	jump(uint16_t instr, t_vm *vm)
 {
-	uint16_t	offset;
-	uint16_t	nzp;
+	uint16_t	br;
 
-	nzp = instr >> 9 & 0x7;
-	if (nzp & vm->regs[R_COND])
-	{
-		offset = sign_extend(instr & 0xff1, 9);
-		vm->regs[R_PC] += offset;
-	}
-	//update_cond(vm, R_PC); //Why no update?
+	br = instr >> 6 & 7;
+	vm->regs[R_PC] = vm->regs[br];
 }
