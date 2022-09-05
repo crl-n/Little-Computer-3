@@ -6,14 +6,23 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 12:52:47 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 13:33:17 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LC3VM_H
 # define LC3VM_H
 
+# include <stdio.h>
 # include <stdint.h>
+# include <signal.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <fcntl.h>
+# include <sys/time.h>
+# include <sys/types.h>
+# include <sys/termios.h>
+# include <sys/mman.h>
 
 # define MEMORY_MAX (1 << 16)
 # define PC_START 0x3000
@@ -68,6 +77,13 @@ enum e_trapcode
 	TRAP_IN = 0x23,
 	TRAP_PUTSP = 0x24,
 	TRAP_HALT = 0x25,
+};
+
+/* Memory mapped registers */
+enum e_mmr
+{
+	MR_KBSR = 0xfe00,
+	MR_KBDR = 0xfe02,
 };
 
 typedef struct s_vm

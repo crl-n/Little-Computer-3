@@ -5,7 +5,7 @@ SRCDIR = src/
 SRCS := $(addprefix $(SRCDIR), main.c \
 		add_instr.c branch_instr.c cond_instr.c load_instr.c store_instr.c rti_instr.c\
 		trap.c \
-		mem_read.c sign_extend.c update_cond.c read_image.c)
+		vm_utils.c sign_extend.c update_cond.c read_image.c)
 
 OBJDIR := obj/
 OBJS := $(SRCS:$(SRCDIR)%.c=obj/%.o)
