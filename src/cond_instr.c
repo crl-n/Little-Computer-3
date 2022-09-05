@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:20:17 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 12:50:43 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 16:05:49 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ void	and_comparison(uint16_t instr, t_vm *vm)
 	if (imm_flag)
 	{
 		vm->regs[dr] = vm->regs[sr1] & sign_extend(instr & 0x1f, 5);
-		return ;
 	}
-	sr2 = instr & 0x7;
-	vm->regs[dr] = vm->regs[sr1] & vm->regs[sr2];
+	else
+	{
+		sr2 = instr & 0x7;
+		vm->regs[dr] = vm->regs[sr1] & vm->regs[sr2];
+	}
 	update_cond(vm, dr);
 }
 
