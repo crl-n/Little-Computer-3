@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 22:08:09 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/05 10:35:11 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,13 @@ void		ldi(uint16_t instr, t_vm *vm);
 void		jump(uint16_t instr, t_vm *vm);
 void		jsr(uint16_t instr, t_vm *vm);
 void		complement(uint16_t instr, t_vm *vm);
+void		st(uint16_t instr, t_vm *vm);
+void		sti(uint16_t instr, t_vm *vm);
+void		str(uint16_t instr, t_vm *vm);
+void		ldr(uint16_t instr, t_vm *vm);
+void		rti(uint16_t instr, t_vm *vm);
+void		lea(uint16_t instr, t_vm *vm);
+
 
 uint16_t	sign_extend(uint16_t val, int bit_count);
 void		update_cond(t_vm *vm, uint16_t r);
