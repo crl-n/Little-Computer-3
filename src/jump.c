@@ -6,29 +6,9 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:09:48 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 21:28:21 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/05 12:53:07 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lc3vm.h"
 
-/* Conditional jump instruction.
- *
- * Encodings
- *
- * Jump:
- * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
- * |    OPCODE     |    --     |   BaseR   |          --           |
- *
- * Return:
- * |15 |14 |13 |12 |11 |10 | 9 | 8 | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
- * |    OPCODE     |    --     |    111    |          --           |
- *
- */
-void	jump(uint16_t instr, t_vm *vm)
-{
-	uint16_t	br;
-
-	br = instr >> 6 & 7;
-	vm->regs[R_PC] = vm->regs[br];
-}

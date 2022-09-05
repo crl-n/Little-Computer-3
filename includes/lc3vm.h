@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 10:35:11 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 12:52:47 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,11 @@ typedef void (*t_operation)(uint16_t, t_vm *);
 
 void		add(uint16_t instr, t_vm *vm);
 void		and_comparison(uint16_t instr, t_vm *vm);
-void		branch(uint16_t instr, t_vm *vm);
+void		br(uint16_t instr, t_vm *vm);
 void		trap(uint16_t instr, t_vm *vm);
 void		ld(uint16_t instr, t_vm *vm);
 void		ldi(uint16_t instr, t_vm *vm);
-void		jump(uint16_t instr, t_vm *vm);
+void		jmp(uint16_t instr, t_vm *vm);
 void		jsr(uint16_t instr, t_vm *vm);
 void		complement(uint16_t instr, t_vm *vm);
 void		st(uint16_t instr, t_vm *vm);

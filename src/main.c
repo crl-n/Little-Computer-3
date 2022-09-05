@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:30:45 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 10:35:16 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 13:01:53 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	load_program(t_vm *vm)
 }
 
 static const t_operation	g_jumptable[16] = {
-	branch,
+	br,
 	add,
 	ld,
 	st,
@@ -46,7 +46,7 @@ static const t_operation	g_jumptable[16] = {
 	complement,
 	ldi,
 	sti,
-	jump,
+	jmp,
 	0,
 	lea,
 	trap,
