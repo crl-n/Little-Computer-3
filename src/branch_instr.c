@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   branch.c                                           :+:      :+:    :+:   */
+/*   branch_instr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:26:28 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 12:55:39 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:46:13 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,12 @@ void	br(uint16_t instr, t_vm *vm)
 	uint16_t	offset;
 	uint16_t	nzp;
 
-	nzp = instr >> 9 & 0x7;
+	nzp = (instr >> 9) & 0x7;
 	if (nzp & vm->regs[R_COND])
 	{
-		offset = sign_extend(instr & 0xff1, 9);
+		offset = sign_extend(instr & 0x1ff, 9);
 		vm->regs[R_PC] += offset;
 	}
-	//update_cond(vm, R_PC); //Why no update?
 }
 
 /* Jumpt to subroutine.
@@ -53,13 +52,13 @@ void	jsr(uint16_t instr, t_vm *vm)
 	uint16_t	offset;
 
 	vm->regs[R_R7] = vm->regs[R_PC];
-	if (instr >> 11 & 1)
+	if ((instr >> 11) & 1)
 	{
 		offset = instr & 0x7ff;
-		vm->regs[R_PC] = sign_extend(offset, 11);
+		vm->regs[R_PC] += sign_extend(offset, 11);
 		return ;
 	}
-	br = instr >> 6 & 7;
+	br = (instr >> 6) & 7;
 	vm->regs[R_PC] = vm->regs[br];
 }
 
@@ -80,6 +79,6 @@ void	jmp(uint16_t instr, t_vm *vm)
 {
 	uint16_t	br;
 
-	br = instr >> 6 & 7;
+	br = (instr >> 6) & 0x7;
 	vm->regs[R_PC] = vm->regs[br];
 }

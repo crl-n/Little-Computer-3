@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   add.c                                              :+:      :+:    :+:   */
+/*   add_instr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:27:47 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/04 20:24:31 by carlnysten       ###   ########.fr       */
+/*   Updated: 2022/09/05 16:01:08 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ void	add(uint16_t instr, t_vm *vm)
 	uint16_t	sr2;
 	uint16_t	imm_flag;
 
-	dr = instr >> 9 & 0x7;
-	sr1 = instr >> 6 & 0x7;
-	imm_flag = instr >> 5 & 0x1;
+	dr = (instr >> 9) & 0x7;
+	sr1 = (instr >> 6) & 0x7;
+	imm_flag = (instr >> 5) & 0x1;
 	if (imm_flag)
 	{
 		vm->regs[dr] = vm->regs[sr1] + sign_extend(instr & 0x1f, 5);
-		return ;
 	}
-	sr2 = instr & 0x7;
-	vm->regs[dr] = vm->regs[sr1] + vm->regs[sr2];
+	else
+	{
+		sr2 = instr & 0x7;
+		vm->regs[dr] = vm->regs[sr1] + vm->regs[sr2];
+	}
 	update_cond(vm, dr);
 }

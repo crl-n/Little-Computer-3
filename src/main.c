@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:30:45 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 15:04:03 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:10:18 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	load_program(t_vm *vm, int argc, char **argv)
 {
 	int	i;
 
-	i = 0;
+	i = 1;
 	while (i < argc)
 	{
 		if (!read_image(argv[i], vm))

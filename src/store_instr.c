@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   st.c                                               :+:      :+:    :+:   */
+/*   store_instr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 22:13:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 12:43:03 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:58:39 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	st(uint16_t instr, t_vm *vm)
 	uint16_t	sr;
 	uint16_t	offset;
 
-	sr = instr >> 9 & 7;
+	sr = (instr >> 9) & 0x7;
 	offset = sign_extend(instr & 0x1ff, 9);
 	vm->memory[vm->regs[R_PC] + offset] = vm->regs[sr];
 }
@@ -44,7 +44,7 @@ void	sti(uint16_t instr, t_vm *vm)
 	uint16_t	sr;
 	uint16_t	offset;
 
-	sr = instr >> 9 & 7;
+	sr = (instr >> 9) & 0x7;
 	offset = sign_extend(instr & 0x1ff, 9);
 	vm->memory[vm->memory[vm->regs[R_PC] + offset]] = vm->regs[sr];
 }
@@ -64,8 +64,8 @@ void	str(uint16_t instr, t_vm *vm)
 	uint16_t	br;
 	uint16_t	offset;
 
-	sr = instr >> 9 & 7;
-	br = instr >> 6 & 7;
+	sr = (instr >> 9) & 0x7;
+	br = (instr >> 6) & 0x7;
 	offset = sign_extend(instr & 0x3f, 6);
 	vm->memory[vm->regs[br] + offset] = vm->regs[sr];
 }
