@@ -1,4 +1,4 @@
-NAME := lc3vm
+NAME := lc3
 CFLAGS := -Wall -Wextra -Werror -g -I./includes
 
 SRCDIR = src/
