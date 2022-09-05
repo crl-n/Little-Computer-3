@@ -6,12 +6,27 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:29:17 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 11:07:25 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 11:22:40 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lc3vm.h"
 #include <stdio.h>
+
+/* Read a single ASCII character */
+void	trap_getc(t_vm *vm)
+{
+	vm->regs[R_R0] = (uint16_t) getchar();
+	update_cond(vm, R_R0);
+}
+
+void	trap_out(t_vm *vm)
+{
+	uint16_t	c;
+
+	c = vm->regs[R_R0] & 0xff;
+	putc((char) c, stdout);
+}
 
 /* Writes a null-terminated string of ASCII characters to the STDOUT.
  * Each character is stored not as a byte, but a uint16_t */
@@ -40,7 +55,7 @@ void	trap(uint16_t instr, t_vm *vm)
 
 	trapcode = instr & 0xff;
 	if (trapcode == TRAP_GETC)
-		return ;
+		trap_getc(vm);
 	else if (trapcode == TRAP_OUT)
 		return ;
 	else if (trapcode == TRAP_PUTS)
