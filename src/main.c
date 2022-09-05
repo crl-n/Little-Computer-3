@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:30:45 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 13:01:53 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:04:03 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,6 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
-
-int	init_vm(t_vm *vm)
-{
-	vm->running = 1;
-	vm->memory = malloc(MEMORY_MAX * sizeof (uint16_t));
-	if (!vm->memory)
-		return (-1);
-	bzero(vm->regs, sizeof (uint16_t) * 11);
-	vm->regs[R_PC] = PC_START;
-	vm->regs[R_COND] = COND_POS;
-	return (0);
-}
-
-void	load_program(t_vm *vm)
-{
-	vm->memory[PC_START] = 0b0001001010100001;
-	vm->memory[PC_START + 1] = 0b1111000000100101;
-}
 
 static const t_operation	g_jumptable[16] = {
 	br,
@@ -52,15 +34,55 @@ static const t_operation	g_jumptable[16] = {
 	trap,
 };
 
-int	main(void)
+void	handle_interrupt(int signal)
+{
+	(void) signal;
+	restore_input_buffering();
+	puts("\n");
+	exit(-2);
+}
+
+int	init(t_vm *vm)
+{
+	vm->running = 1;
+	vm->memory = malloc(MEMORY_MAX * sizeof (uint16_t));
+	if (!vm->memory)
+		return (-1);
+	bzero(vm->regs, sizeof (uint16_t) * 11);
+	vm->regs[R_PC] = PC_START;
+	vm->regs[R_COND] = COND_POS;
+	signal(SIGINT, handle_interrupt);
+	disable_input_buffering();
+	return (0);
+}
+
+void	load_program(t_vm *vm, int argc, char **argv)
+{
+	int	i;
+
+	i = 0;
+	while (i < argc)
+	{
+		if (!read_image(argv[i], vm))
+		{
+			printf("Failed to load image: %s\n", argv[i]);
+			exit(-1);
+		}
+		i++;
+	}
+}
+
+int	main(int argc, char **argv)
 {
 	t_vm		vm;
 	uint16_t	instr;
 	uint16_t	op;
 
-	if (init_vm(&vm) == -1)
+	if (argc < 2)
+		return (puts("Usage: lc3 [image-file1] ...\n"), 0);
+	if (init(&vm) == -1)
 		return (-1);
-	load_program(&vm);
+	load_program(&vm, argc, argv);
 	while (vm.running)
 	{
 		instr = vm.memory[vm.regs[R_PC]];

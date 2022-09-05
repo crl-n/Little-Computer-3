@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mem_read.c                                         :+:      :+:    :+:   */
+/*   vm_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:05:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 13:38:43 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 15:03:14 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lc3vm.h"
 #include <unistd.h>
 
-struct termios 	original_tio;
+struct termios	original_tio;
 struct termios	new_tio;
 
-void	diable_input_buffering(void)
+void	disable_input_buffering(void)
 {
 	tcgetattr(STDIN_FILENO, &original_tio);
 	new_tio = original_tio;
