@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:29:17 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 12:37:45 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/05 12:39:09 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,5 +99,9 @@ void	trap(uint16_t instr, t_vm *vm)
 	else if (trapcode == TRAP_PUTSP)
 		trap_putsp(vm);
 	else if (trapcode == TRAP_HALT)
+	{
+		puts("HALT");
+		fflush(stdout);
 		vm->running = 0;
+	}
 }
