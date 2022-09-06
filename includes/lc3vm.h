@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:31:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 15:03:47 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/06 09:09:06 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void		lea(uint16_t instr, t_vm *vm);
 uint16_t	sign_extend(uint16_t val, int bit_count);
 void		update_cond(t_vm *vm, uint16_t r);
 uint16_t	mem_read(t_vm *vm, uint16_t addr);
+void		mem_write(t_vm *vm, uint16_t addr, uint16_t val);
 void		disable_input_buffering(void);
 void		restore_input_buffering(void);
 int			read_image(const char *path, t_vm *vm);

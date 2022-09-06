@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:05:40 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 15:03:14 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/06 09:08:48 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,9 @@ uint16_t	mem_read(t_vm *vm, uint16_t addr)
 			vm->memory[MR_KBSR] = 0;
 	}
 	return (vm->memory[addr]);
+}
+
+void	mem_write(t_vm *vm, uint16_t addr, uint16_t val)
+{
+	vm->memory[addr] = val;
 }

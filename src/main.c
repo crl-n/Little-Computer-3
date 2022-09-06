@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 20:30:45 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 15:10:18 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/06 00:28:38 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,10 +85,11 @@ int	main(int argc, char **argv)
 	load_program(&vm, argc, argv);
 	while (vm.running)
 	{
-		instr = vm.memory[vm.regs[R_PC]];
+		instr = mem_read(&vm, vm.regs[R_PC]);
 		op = instr >> 12;
 		vm.regs[R_PC]++;
 		g_jumptable[op](instr, &vm);
 	}
+	restore_input_buffering();
 	return (0);
 }

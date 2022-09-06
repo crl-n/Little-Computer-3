@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 20:26:28 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 15:46:13 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/06 09:16:48 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,12 @@ void	jsr(uint16_t instr, t_vm *vm)
 	{
 		offset = instr & 0x7ff;
 		vm->regs[R_PC] += sign_extend(offset, 11);
-		return ;
 	}
-	br = (instr >> 6) & 7;
-	vm->regs[R_PC] = vm->regs[br];
+	else
+	{
+		br = (instr >> 6) & 7;
+		vm->regs[R_PC] = vm->regs[br];
+	}
 }
 
 /* Conditional jump instruction.

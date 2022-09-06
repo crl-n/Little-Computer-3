@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 21:40:51 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 12:41:01 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/06 09:17:02 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ld(uint16_t instr, t_vm *vm)
 
 	dr = instr >> 9 & 7;
 	offset = sign_extend(instr & 0x1ff, 9);
-	vm->regs[dr] = mem_read(vm, vm->regs[R_PC + offset]);
+	vm->regs[dr] = mem_read(vm, vm->regs[R_PC] + offset);
 	update_cond(vm, dr);
 }
 
@@ -47,7 +47,7 @@ void	ldi(uint16_t instr, t_vm *vm)
 
 	dr = instr >> 9 & 7;
 	offset = sign_extend(instr & 0x1ff, 9);
-	vm->regs[dr] = mem_read(vm, mem_read(vm, vm->regs[R_PC + offset]));
+	vm->regs[dr] = mem_read(vm, mem_read(vm, vm->regs[R_PC] + offset));
 	update_cond(vm, dr);
 }
 
@@ -87,6 +87,6 @@ void	lea(uint16_t instr, t_vm *vm)
 
 	dr = instr >> 9 & 7;
 	offset = sign_extend(instr & 0x1ff, 9);
-	vm->regs[dr] = mem_read(vm, vm->regs[R_PC] + offset);
+	vm->regs[dr] = vm->regs[R_PC] + offset;
 	update_cond(vm, dr);
 }

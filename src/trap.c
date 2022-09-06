@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 16:29:17 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 12:39:09 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/06 00:48:04 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	trap_putsp(t_vm *vm)
 {
 	uint16_t	*c;
 
+	puts("TRAP\n");
 	c = vm->memory + vm->regs[R_R0];
 	while (*c)
 	{

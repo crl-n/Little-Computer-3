@@ -6,7 +6,7 @@
 /*   By: carlnysten <marvin@42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 22:13:56 by carlnysten        #+#    #+#             */
-/*   Updated: 2022/09/05 15:58:39 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/06 09:17:14 by carlnysten       ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	st(uint16_t instr, t_vm *vm)
 
 	sr = (instr >> 9) & 0x7;
 	offset = sign_extend(instr & 0x1ff, 9);
-	vm->memory[vm->regs[R_PC] + offset] = vm->regs[sr];
+	mem_write(vm, vm->regs[R_PC] + offset, vm->regs[sr]);
 }
 
 /* Store indirect. Stores the contents of SR at the address pointed to
@@ -46,7 +46,7 @@ void	sti(uint16_t instr, t_vm *vm)
 
 	sr = (instr >> 9) & 0x7;
 	offset = sign_extend(instr & 0x1ff, 9);
-	vm->memory[vm->memory[vm->regs[R_PC] + offset]] = vm->regs[sr];
+	mem_write(vm, mem_read(vm, vm->regs[R_PC] + offset), vm->regs[sr]);
 }
 
 /* Store base + offset.
@@ -57,7 +57,6 @@ void	sti(uint16_t instr, t_vm *vm)
  * |    OPCODE     |    SR     |    BaseR  |        offset6        |
  *
  */
-
 void	str(uint16_t instr, t_vm *vm)
 {
 	uint16_t	sr;
@@ -67,5 +66,5 @@ void	str(uint16_t instr, t_vm *vm)
 	sr = (instr >> 9) & 0x7;
 	br = (instr >> 6) & 0x7;
 	offset = sign_extend(instr & 0x3f, 6);
-	vm->memory[vm->regs[br] + offset] = vm->regs[sr];
+	mem_write(vm, vm->regs[br] + offset, vm->regs[sr]);
 }
