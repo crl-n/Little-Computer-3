@@ -1,11 +1,8 @@
-NAME := lc3
+NAME := little-assembler
 CFLAGS := -Wall -Wextra -Werror -g -I./includes
 
 SRCDIR = src/
-SRCS := $(addprefix $(SRCDIR), main.c \
-		add_instr.c branch_instr.c cond_instr.c load_instr.c store_instr.c rti_instr.c\
-		trap.c \
-		vm_utils.c sign_extend.c update_cond.c read_image.c)
+SRCS := $(addprefix $(SRCDIR), main.c)
 
 OBJDIR := obj/
 OBJS := $(SRCS:$(SRCDIR)%.c=obj/%.o)
