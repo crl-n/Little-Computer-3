@@ -1,5 +1,5 @@
 NAME := little-assembler
-CFLAGS := -Wall -Wextra -Werror -g -I./includes
+CFLAGS := -Wall -Wextra -Werror -g -I./includes -fsanitize=address
 
 SRCDIR = src/
 SRCS := $(addprefix $(SRCDIR), main.c)

@@ -1,2 +1,0 @@
-command script import ./lldb_scripts.py
-target create lc3

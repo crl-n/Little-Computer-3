@@ -6,7 +6,7 @@
 /*   By: cnysten <cnysten@student.hive.fi>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 11:28:45 by cnysten           #+#    #+#             */
-/*   Updated: 2022/09/07 15:10:52 by cnysten          ###   ########.fr       */
+/*   Updated: 2022/09/09 11:50:43 by cnysten          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	*read_file(char *filename)
 	return (contents);
 }
 
-char	**lex(char *contents)
+t_str_arr	lex(char *contents)
 {
 	char	**lexemes;
 	char	*str;
@@ -58,13 +58,48 @@ char	**lex(char *contents)
 	}
 	for (size_t i = 0; i < len; i++)
 		printf("'%s', ", lexemes[i]);
-	return (lexemes);
+	return ((t_str_arr){lexemes, len});
 }
 
-t_token	*tokenize(char **lexemes)
+int	is_opcode(char *token_str)
 {
-	(void) lexemes;
-	return (NULL);
+	static char	*op_identifiers[] = {"ADD", "AND", "BR", "JMP",
+									"JSR", "LD", "LDI", "LDR",
+									"LEA", "NOT", "RET", "RTI",
+									"ST", "STI", "STR", "TRAP"};
+	for (int i = 0; i < 16; i++)
+	{
+		if (strcmp(token_str, op_identifiers[i]) == 0)
+			return (1);
+	}
+	return (0);
+}
+
+t_token	*tokenize(t_str_arr arr)
+{
+	t_token	*tokens;
+	char	**lexemes;
+	size_t	len;
+
+	lexemes = arr.strs;
+	len = arr.len;
+	tokens = malloc(len * sizeof (t_token));
+	if (!tokens)
+		return (NULL);
+	for (size_t i = 0; i < len; i++)
+	{
+		printf("lexemes[%zu]: %s\n", i, lexemes[i]);
+		if (lexemes[i][0] == ';')
+			tokens[i] = (t_token){COMMENT, lexemes[i]};
+		else if (lexemes[i][0] == '.')
+			tokens[i] = (t_token){PSEUDOOP, lexemes[i]};
+		else if (is_opcode(lexemes[0]))
+			tokens[i] = (t_token){OPCODE, lexemes[i]};
+	}
+	printf("\n\n\n");
+	for (size_t i = 0; i < len; i++)
+		printf("Type %d: '%s', ", tokens[i].type, tokens[i].lexeme);
+	return (tokens);
 }
 
 uint16_t	*map_to_instructions(t_token *tokens)
